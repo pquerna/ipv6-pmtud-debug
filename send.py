@@ -29,7 +29,12 @@ import dpkt
 
 def resolve_with_dns(target):
     addrinfo = socket.getaddrinfo(target, None, socket.AF_INET6)
-    
+
+    if not addrinfo:
+        raise RuntimeError('Unable to resolve: '+ target)
+
+    return addrinfo[0][4][0]
+
 def resolve_target(target):
     try:
         socket.inet_pton(socket.AF_INET6, target)
